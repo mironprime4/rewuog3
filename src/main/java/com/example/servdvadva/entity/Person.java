@@ -1,4 +1,4 @@
-package com.example.servdvadva.dto;
+package com.example.servdvadva.entity;
 
 
 import jakarta.persistence.*;
