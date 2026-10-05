@@ -19,6 +19,9 @@ public class PersonDetails implements UserDetails {
         return List.of();
     }
 
+    public Person getPerson(){
+        return this.person;
+    }
     @Override
     public @Nullable String getPassword(){
         return this.person.getPassword();

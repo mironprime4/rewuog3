@@ -1,4 +1,4 @@
-package com.example.servdvadva;
+package com.example.servdvadva.repository;
 
 import com.example.servdvadva.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;

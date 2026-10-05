@@ -23,6 +23,11 @@ public class Person {
     @Size(min = 2, max = 100)
     private String username;
 
+    @Override
+    public String toString() {
+        return "id: " + id + "username: " + username + "password: " + password + "yearofbirth: " + yearOfBirth;
+    }
+
     @Min(1900)
     @Column(name = "year_of_birth")
     private int yearOfBirth;
