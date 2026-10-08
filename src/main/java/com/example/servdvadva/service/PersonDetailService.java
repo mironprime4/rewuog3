@@ -20,7 +20,7 @@ public class PersonDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Person> person =  peopleRepository.findByUsername(username);
-        if (username.isEmpty()){
+        if (person.isEmpty()){
             throw new UsernameNotFoundException("user nor found");
         }
         return new PersonDetails(person.get());

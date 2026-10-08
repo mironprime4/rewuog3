@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,8 +26,7 @@ public class SpringConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests( authz -> authz.requestMatchers("/auth/login", "/error", "/auth/registration").
+                .authorizeHttpRequests(authz -> authz.requestMatchers("/auth/login", "/error", "/auth/registration").
                         permitAll().anyRequest().authenticated())
                 .formLogin(form -> form.defaultSuccessUrl("/hello", true)
                         .loginPage("/auth/login")
@@ -34,13 +34,17 @@ public class SpringConfig {
                         .defaultSuccessUrl("/hello", true)
                         .failureUrl("/auth.login?error")
                         .permitAll()
-                    )
-                .logout(LogoutConfigurer::permitAll);
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/login")
+                        .logoutSuccessUrl("/auth/logout")
+                        .deleteCookies("JSESSIONID")
+                        .permitAll());
         return http.build();
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 }
