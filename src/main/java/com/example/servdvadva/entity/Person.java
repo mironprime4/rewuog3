@@ -34,8 +34,12 @@ public class Person {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public Person(String username, int yearOfBirth) {
         this.username = username;
         this.yearOfBirth = yearOfBirth;
     }
+
 }
