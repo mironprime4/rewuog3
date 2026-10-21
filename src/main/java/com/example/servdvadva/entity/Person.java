@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -36,6 +38,12 @@ public class Person {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name= "refresh_token")
+    private String refreshToken;
+
+    @Column(name="token_expiration")
+    private LocalDateTime tokenExpiration;
 
     public Person(String username, int yearOfBirth) {
         this.username = username;

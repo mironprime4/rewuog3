@@ -1,6 +1,7 @@
 package com.example.servdvadva.controllers;
 
 
+import com.example.servdvadva.dto.AuthDTO;
 import com.example.servdvadva.dto.PersonDto;
 import com.example.servdvadva.entity.Person;
 import com.example.servdvadva.service.RegisterService;
@@ -9,6 +10,9 @@ import com.example.servdvadva.util.PersonValidator;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,9 +30,17 @@ public class AuthController {
     private final JWTUtil jwtUtil;
     private final ModelMapper modelMapper;
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "auth/login";
+    private final AuthenticationManager authenticationManager;
+
+    @PostMapping("/login")
+    public Map<String, String> loginPage(@RequestBody AuthDTO authDTO) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(authDTO.getUsername(), authDTO.getPassword());
+        try {
+         authenticationManager.authenticate(authenticationToken);
+        } catch (BadCredentialsException e) {
+            return Map.of("message", "Incorrect Credential!");
+        }
+        return registerService.authentication(authDTO.getUsername());
     }
 
     @GetMapping("/registration")
@@ -41,13 +53,18 @@ public class AuthController {
         Person person = convertToPerson(personDto);
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) return Map.of("ошибка", "Ошибка регистрации");
-        registerService.register(person);
-
-        String token = jwtUtil.generateToken(person.getUsername());
-        return Map.of("jwt-token", token);
+        return registerService.register(person);
     }
 
-    public Person  convertToPerson(PersonDto person){
+    @PostMapping("/refresh")
+    public Map<String, String> refresh(@RequestBody Map<String, String> body){
+        String refreshToken = body.get("refreshToken");
+        if (refreshToken == null) return Map.of("message", "Missini refresh token");
+
+        return registerService.refreshToken(refreshToken);
+    }
+
+    public Person convertToPerson(PersonDto person) {
         return this.modelMapper.map(person, Person.class);
     }
 }

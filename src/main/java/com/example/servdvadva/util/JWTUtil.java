@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -15,9 +16,24 @@ public class JWTUtil {
     @Value("${jwt_secret}")
     private final String secret = "GpYvQNcDqdNetz9WvhUDbgSnNMQuJdqsEC0E7S-bhLLLBgR3u25IwCcTcsMj9wnn";
 
+    private SecretKey getSigningKey(){
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public String generateTokenRefresh(String username){
+        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        Date expirationDate = (Date) Date.from(ZonedDateTime.now().plusDays(60).toInstant());
+        return Jwts.builder()
+                .subject(username)
+                .issuedAt(new Date())
+                .issuer("mironprime")
+                .expiration(expirationDate)
+                .signWith(getSigningKey())
+                .compact();
+    }
+
     public String generateToken(String username){
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-
         Date expirationDate = (Date) Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
         return Jwts.builder()
                 .subject(username)
