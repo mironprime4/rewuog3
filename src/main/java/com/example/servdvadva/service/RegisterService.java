@@ -26,7 +26,6 @@ public class RegisterService {
     public Map<String, String> register(Person person) {
         String encodedPassword = passwordEncoder.encode(person.getPassword());
         person.setPassword(encodedPassword);
-        person.setRole(Role.ROLE_STUDENT);
 
         String accessToken = jwtUtil.generateToken(person.getUsername());
         String refreshToken = jwtUtil.generateTokenRefresh(person.getUsername());
