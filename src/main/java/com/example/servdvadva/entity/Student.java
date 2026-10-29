@@ -18,4 +18,6 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private int pid;
+
+    private int grade;
 }
