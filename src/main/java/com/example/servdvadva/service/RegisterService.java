@@ -2,7 +2,6 @@ package com.example.servdvadva.service;
 
 
 import com.example.servdvadva.entity.Person;
-import com.example.servdvadva.entity.Role;
 import com.example.servdvadva.repository.PeopleRepository;
 import com.example.servdvadva.util.JWTUtil;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,12 @@
 package com.example.servdvadva.entity;
 
 
+import com.example.servdvadva.data.Difficulty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -24,4 +27,7 @@ public class Task {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
     private int qid;
+
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 }

@@ -17,5 +17,6 @@ public class Subject {
 
     private String name;
 
-
+    @Column(name="task_count")
+    private int totalTasks;
 }

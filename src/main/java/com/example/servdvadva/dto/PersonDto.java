@@ -1,9 +1,6 @@
 package com.example.servdvadva.dto;
 
-import com.example.servdvadva.entity.Role;
 import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

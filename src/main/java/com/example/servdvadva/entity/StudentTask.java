@@ -1,9 +1,12 @@
 package com.example.servdvadva.entity;
 
 
+import com.example.servdvadva.data.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,13 +18,17 @@ public class StudentTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     private int sid;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private int tid;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
+    @Column(name="updated_at")
+    private LocalDateTime Update;
 }

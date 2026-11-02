@@ -1,6 +1,7 @@
 package com.example.servdvadva.entity;
 
 
+import com.example.servdvadva.data.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
