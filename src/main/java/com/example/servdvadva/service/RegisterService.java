@@ -39,7 +39,7 @@ public class RegisterService {
 
     @Transactional
     public Map<String, String> refreshToken(String oldRefreshToken) {
-        Person person = peopleRepository.findByToken(oldRefreshToken)
+        Person person = peopleRepository.findByRefreshToken(oldRefreshToken)
                 .orElseThrow(() -> new RuntimeException("Refresh token not found"));
 
         if (person.getTokenExpiration().isBefore(LocalDateTime.now())){

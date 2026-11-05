@@ -36,7 +36,7 @@ public class SpringConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authz -> authz.requestMatchers("/auth/login", "/error", "/auth/registration", "auth/refresh").
+                .authorizeHttpRequests(authz -> authz.requestMatchers("/auth/login", "/error", "/auth/registration", "/auth/refresh").
                         permitAll().anyRequest().hasAnyRole( "ADMIN", "TEACHER", "STUDENT")
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

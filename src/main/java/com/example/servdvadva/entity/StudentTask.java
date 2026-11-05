@@ -20,11 +20,11 @@ public class StudentTask {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
-    private int sid;
+    private Student student;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
-    private int tid;
+    private Task task;
 
     @Enumerated(EnumType.STRING)
     private Status status;

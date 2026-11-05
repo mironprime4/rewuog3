@@ -16,11 +16,11 @@ public class StudentSubject {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="student_id")
-    private int studentId;
+    private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="subject_id")
-    private int subjectId;
+    private Subject subject;
 
     @Column(name="completed_task")
     private int completedTask;

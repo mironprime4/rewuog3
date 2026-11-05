@@ -20,13 +20,13 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
-    private int sid;
+    private Subject subject;
 
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
-    private int qid;
+    private Question question;
 
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;

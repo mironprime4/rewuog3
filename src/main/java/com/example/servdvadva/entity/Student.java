@@ -16,8 +16,8 @@ public class Student {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
-    private int pid;
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     private int grade;
 }
