@@ -24,7 +24,7 @@ public class Task {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
     private Question question;
 

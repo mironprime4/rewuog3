@@ -59,7 +59,7 @@ public class AuthController {
     @PostMapping("/refresh")
     public Map<String, String> refresh(@RequestBody Map<String, String> body){
         String refreshToken = body.get("refreshToken");
-        if (refreshToken == null) return Map.of("message", "Missini refresh token");
+        if (refreshToken == null) return Map.of("message", "Missing refresh token");
 
         return registerService.refreshToken(refreshToken);
     }

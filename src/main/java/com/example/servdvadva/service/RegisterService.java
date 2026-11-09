@@ -1,8 +1,11 @@
 package com.example.servdvadva.service;
 
 
+import com.example.servdvadva.data.Role;
 import com.example.servdvadva.entity.Person;
+import com.example.servdvadva.entity.Student;
 import com.example.servdvadva.repository.PeopleRepository;
+import com.example.servdvadva.repository.StudentRepository;
 import com.example.servdvadva.util.JWTUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +21,7 @@ import java.util.Map;
 public class RegisterService {
     private final PeopleRepository peopleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final StudentRepository studentRepository;
 
     private final JWTUtil jwtUtil;
 
@@ -26,6 +30,8 @@ public class RegisterService {
         String encodedPassword = passwordEncoder.encode(person.getPassword());
         person.setPassword(encodedPassword);
 
+
+
         String accessToken = jwtUtil.generateToken(person.getUsername());
         String refreshToken = jwtUtil.generateTokenRefresh(person.getUsername());
 
@@ -33,6 +39,12 @@ public class RegisterService {
         person.setTokenExpiration(LocalDateTime.now().plusDays(60));
 
         peopleRepository.save(person);
+
+        if(person.getRole().equals(Role.ROLE_STUDENT)){
+            Student student = new Student();
+            student.setPerson(person);
+                    studentRepository.save(student);
+        }
 
         return Map.of("accessToken", accessToken, "refreshToken", refreshToken);
     }

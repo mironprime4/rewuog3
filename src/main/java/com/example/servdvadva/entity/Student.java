@@ -18,6 +18,4 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
     private Person person;
-
-    private int grade;
 }
